@@ -230,8 +230,10 @@ NOTE: Since stdout and stderr are captured, they cannot be seen during the
 command execution.
 */
 func RunCommand(cmdArgs []string) (map[string]interface{}, error) {
+	//Hacky should be resolved with #21
+	cmdArgs = append([]string{"-c"}, cmdArgs...)
+	cmd := exec.Command("sh", cmdArgs[1:]...)
 
-	cmd := exec.Command("sh", cmdArgs[0:]...)
 	stderrPipe, err := cmd.StderrPipe()
 	if err != nil {
 		return nil, err
