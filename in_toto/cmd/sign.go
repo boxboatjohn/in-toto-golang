@@ -10,7 +10,6 @@ import (
 var prompt bool
 var append bool
 var output string
-var gpgID string
 
 var signCmd = &cobra.Command{
 	Use:   "sign",
@@ -25,6 +24,12 @@ func init() {
 		`Path to a PEM formatted private key file used to sign
 the resulting layout metadata. (passing one of '--key'
 or '--gpg' is required) `)
+	signCmd.PersistentFlags().BoolVarP(&prompt,
+		"prompt", "p", false,
+		`Prompt for signing key decryption password`)
+	signCmd.PersistentFlags().BoolVarP(&append,
+		"append", "a", false,
+		`Add signatures rather than replacing existing signatures`)
 }
 
 func signLayout(cmd *cobra.Command, args []string) {
